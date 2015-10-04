@@ -42,13 +42,13 @@ begin
 
 	stimul_p : process
 	begin
-		wait for 105 ns;
 		reset_n <= '0';
 		wait for t;
 		reset_n <= '1';
+		wait for 35 ns;
 		wait for t;
-		A  <= (others => '0');
-		D  <= (others => '0');
+		A  <= "0110100";
+		D  <= "10111001";
 		Go <= '1';
 		wait for t;
 		Go <= '0';
