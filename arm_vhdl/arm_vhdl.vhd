@@ -12,8 +12,8 @@
 -- Date: 4 October, 2015.
 --
 -- Code Description:
---		This code is "parallel in serial out" buffer, where it takes two inputs and outputs them bit-by-bit when:
---		"Go" input signal is set to '1' as a pulse (. . . , 0, 1, 0, . . .)
+--		This code is "parallel in serial out" buffer, where it takes two inputs "A" and "D" and outputs them bit-by-bit(1 bit at a time) when:
+--		"Go" input signal is set to '1' as a pulse (. . . , 0, 1, 0, . . .). firs "A" then "D". starts from Left bit, goes to Right.
 --		after pulsing the "Go" signal inputs registered/saved.
 --		to interrupt the transmission, can only be done by setting "Reset_n" to '0' or pulsing the "Go" signal and giving new input data. 
 --		during transmission of data, code sends out clock as well. 
