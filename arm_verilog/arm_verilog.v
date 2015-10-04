@@ -1,12 +1,22 @@
-//main entity
-module circuit_with_delay (A,B,C,x,y);
+module arbiter(
+	data		,
+	clock		,
+	reset		,
+	req_0		,
+	req_1		,
+	gnt_0		,
+	gnt_1			
+);
 
-input A,B,C;
-output x,y;
-wire e;
+input [7:0]data;
+input clock;
+input reset;
+input req_0;
+input req_1;
 
-and #(30) g1(e,A,B);
-not #(10) g2(y,C);
-or #(20) g3(x,e,y);
+output gnt_0;
+output gnt_1;
 
-endmodule
+wire and_gate_output; // "and_gate_output" is a wire that only outputs
+reg d_flip_flop_output; // "d_flip_flop_output" is a register; it stores and outputs a value
+reg [7:0] address_bus; // "address_bus" is a little-endian 8-bit register
