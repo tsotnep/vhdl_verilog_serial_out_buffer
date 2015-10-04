@@ -1,5 +1,3 @@
-//simulation
-
 module stimcrct;
 reg A, B, C;
 wire x, y;
