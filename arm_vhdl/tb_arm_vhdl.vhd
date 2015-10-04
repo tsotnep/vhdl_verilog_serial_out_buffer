@@ -81,14 +81,11 @@ begin
 	begin
 		reset_n <= '0';	wait for t;	reset_n <= '1'; wait for 35 ns; --reset and wait for a while
 	
-		A  <= "1111111"; D  <= "11111111"; 	Go <= '1'; 	wait for t;  Go <= '0'; --test 1
-		wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5);
+		A  <= "1111111"; D  <= "11111111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 1
 		
-		A  <= "1110111"; D  <= "11100111"; 	Go <= '1'; 	wait for t;  Go <= '0'; --test 2
-		wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5);
+		A  <= "1110111"; D  <= "11100111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 2
 		
-		A  <= "0110100"; D  <= "10111001"; 	Go <= '1'; 	wait for t;  Go <= '0'; --test 3
-		wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); 
+		A  <= "0110100"; D  <= "10111001"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 3
 				
 		wait;
 	end process stimul_p;
@@ -102,15 +99,16 @@ begin
 			zA <= '0';
 			zD <= '0';
 		elsif rising_edge(OutC) then
-			if OutD /= 'Z' then
+			if OutD /= 'Z' and zD = '0' then
 				recTemp <= recTemp(recTemp'left - 1 downto 0) & OutD;
 			else
 				if zA = '0' then
 					zA        <= '1';
 					receivedA <= recTemp(recTemp'left - 1 downto 0);
-				else
+				elsif zD = '0' then
 					zD		  <= '1';
 					receivedD <= recTemp;
+					recTemp	  <= (others => '0');
 				end if;
 			end if;
 		end if;

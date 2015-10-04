@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_arm_vhdl_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_arm_vhdl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="16" />
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/arm_vhdl_inst/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/arm_vhdl_inst/Go">
+      <obj_property name="ElementShortName">Go</obj_property>
+      <obj_property name="ObjectShortName">Go</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/arm_vhdl_inst/clk_in">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/arm_vhdl_inst/OutD">
+      <obj_property name="ElementShortName">OutD</obj_property>
+      <obj_property name="ObjectShortName">OutD</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/arm_vhdl_inst/OutC">
+      <obj_property name="ElementShortName">OutC</obj_property>
+      <obj_property name="ObjectShortName">OutC</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/arm_vhdl_inst/concatenatedInputs">
+      <obj_property name="ElementShortName">concatenatedInputs[18:0]</obj_property>
+      <obj_property name="ObjectShortName">concatenatedInputs[18:0]</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/arm_vhdl_inst/A">
+      <obj_property name="ElementShortName">A[6:0]</obj_property>
+      <obj_property name="ObjectShortName">A[6:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/arm_vhdl_inst/D">
+      <obj_property name="ElementShortName">D[7:0]</obj_property>
+      <obj_property name="ObjectShortName">D[7:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/receivedA">
+      <obj_property name="ElementShortName">receivedA[6:0]</obj_property>
+      <obj_property name="ObjectShortName">receivedA[6:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/receivedD">
+      <obj_property name="ElementShortName">receivedD[7:0]</obj_property>
+      <obj_property name="ObjectShortName">receivedD[7:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/recTemp">
+      <obj_property name="ElementShortName">recTemp[7:0]</obj_property>
+      <obj_property name="ObjectShortName">recTemp[7:0]</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="other" fp_name="/tb_arm_vhdl/arm_vhdl_inst/sizeA">
+      <obj_property name="ElementShortName">sizeA</obj_property>
+      <obj_property name="ObjectShortName">sizeA</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="other" fp_name="/tb_arm_vhdl/arm_vhdl_inst/sizeD">
+      <obj_property name="ElementShortName">sizeD</obj_property>
+      <obj_property name="ObjectShortName">sizeD</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/zA">
+      <obj_property name="ElementShortName">zA</obj_property>
+      <obj_property name="ObjectShortName">zA</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="logic" fp_name="/tb_arm_vhdl/zD">
+      <obj_property name="ElementShortName">zD</obj_property>
+      <obj_property name="ObjectShortName">zD</obj_property>
+   </wvobject>
+   <wvobject db_ref_id="1" type="array" fp_name="/tb_arm_vhdl/arm_vhdl_inst/zPause">
+      <obj_property name="ElementShortName">zPause[0:0]</obj_property>
+      <obj_property name="ObjectShortName">zPause[0:0]</obj_property>
+   </wvobject>
+</wave_config>
