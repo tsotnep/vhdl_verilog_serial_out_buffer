@@ -64,7 +64,7 @@ architecture RTL of arm_vhdl is
 	constant outputSize : integer := sizeA + sizeD + 2 * sizeZPause + 2 * sizeHeader; --this is number that identifies how large is a vector that will be sended
 
 	constant zPause       : STD_LOGIC_VECTOR(sizeZPause - 1 downto 0) := (others => 'Z'); --this is a High Impedance after sending input
-	constant header       : STD_LOGIC_VECTOR(sizeHeader - 1 downto 0) := (others => '0'); --this part is inserted in most Left and Right sides of concatenated string
+	constant header       : STD_LOGIC_VECTOR(sizeHeader - 1 downto 0) := (others => '0'); --this part is inserted in most Left and Right sides of concatenated string, header '0' in LM bit is to create "rising_edge" in receiver
 	constant sendingEnded : STD_LOGIC_VECTOR(outputSize - 1 downto 0) := (others => '1'); --when concatenated vector becomes all ones, that means sending has ended
 
 	signal concatenatedInputs : STD_LOGIC_VECTOR(outputSize - 1 downto 0) := (others => '1');
