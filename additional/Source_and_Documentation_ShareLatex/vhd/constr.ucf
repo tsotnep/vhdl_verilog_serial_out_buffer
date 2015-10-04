@@ -1,0 +1,33 @@
+## nexys 3
+NET "realCLK" loc = V10;
+NET "rst" loc = C9;
+NET "btn_in" loc = D9;
+NET "led8th_btn_deb_out" loc = T11;
+NET "led7th_data_received" loc = R11;
+NET "led6th_clks_out" loc = N11;
+NET "masterSwitch" loc = T5;
+#NET "switchAddrs(0)" loc = T10;
+#NET "switchAddrs(1)" loc = T9;
+
+NET "PMOD_out" loc = M10;
+NET "PMOD_in" loc = T12;
+NET "clk_wire_out" loc = K2;
+NET "clk_wire_in" loc = K1;
+
+NET "LEDS_Header(0)" loc = U16;
+NET "LEDS_Header(1)" loc = V16;
+NET "LEDS_Header(2)" loc = U15;
+NET "LEDS_Header(3)" loc = V15;
+
+NET "AN(0)" LOC = N16;
+NET "AN(1)" loc = N15;
+NET "AN(2)" loc = P18;
+NET "AN(3)" loc = P17;
+NET "SevSeg(0)" LOC = T17;
+NET "SevSeg(1)" loc = T18;
+NET "SevSeg(2)" loc = U17;
+NET "SevSeg(3)" loc = U18;
+NET "SevSeg(4)" loc = M14;
+NET "SevSeg(5)" loc = N14;
+NET "SevSeg(6)" loc = L14;
+NET "SevSeg(7)" loc = M13;

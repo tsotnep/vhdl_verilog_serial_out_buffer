@@ -1,0 +1,22 @@
+Tsotne Putkaradze 
+
+after i saw the task that was given to me, i considered showing you the project i did for fun, previous year.
+this project is called a "creeping line"
+- video: https://www.youtube.com/watch?v=I8XFSvqW4v0
+- however i also wrote an draft of manual, have not finished it because of studyings, 
+but u can still take a look at it.
+- sources are also provided in folder: src
+- constraints of design is synthesized on FPGA board: digilent nexys 3
+
+- short description:
+three FPGAs are connected together (but number of FPGAs can be N)
+and pre-stored text is displayed on seven segment displays, text is moving from left to right, 
+like all seven segments were on one board. this is achieved by serial communication 
+(here i'm using only one wire, however, not sending clock is dangerous and might cause data distortions, but this project if for fun, so i did not care much)
+
+in current example, i'm writing following text:
+"Hi dude", on video it's displaying like: "edud iH" because i wanted it like that. but changing order is matter of text array modification - rearrangement.
+
+almost everything is parameterizable
+
+
