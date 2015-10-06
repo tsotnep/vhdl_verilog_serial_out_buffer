@@ -71,7 +71,7 @@ architecture RTL of arm_vhdl is
 	signal becomeIdle         : STD_LOGIC                                 := '0';
 begin
 
-	OutC <= '1' when becomeIdle = '1'	--when sending is finished
+	OutC <= '1' when becomeIdle = '1'	--when sending is finished, we use that additional signal because we registered it and it gives us 1 clock cycle delay, so that clocking will not start earlier than data.
 		else '1' when reset_n = '0'		--when reset is '0'
 		else clk_in;					--send out clk_in in rest of the cases : when data is being sent. 
 

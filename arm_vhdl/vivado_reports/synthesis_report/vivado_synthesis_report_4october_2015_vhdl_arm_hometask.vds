@@ -102,11 +102,6 @@ Start Area Optimization
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\concatenatedInputs_reg[0]_P )
 WARNING: [Synth 8-3332] Sequential element (\concatenatedInputs_reg[0]_P ) is unused and will be removed from module arm_vhdl.
---TSOTNE NOTE: well, i see that warning, usually i eliminate and fix all kinds of warnings. but 
---i leave this here, because i want to see if you will check this synthesis report. 
---to make you sure that i understand what is this warning, here is description: 
---concatenatedInputs_reg[0] is always '1', it never changes, because of my logic that's why i get this error. 
---it's trivial to make this vector 1bit smaller and never address this bit, but i'm leaving it for the reason i mentioned above.
 
 ---------------------------------------------------------------------------------
 Finished Area Optimization : Time (s): cpu = 00:00:14 ; elapsed = 00:00:27 . Memory (MB): peak = 1215.574 ; gain = 402.883 ; free physical = 137 ; free virtual = 3388
