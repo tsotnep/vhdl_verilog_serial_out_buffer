@@ -4,3 +4,6 @@
 .metadata/
 /arm_vhdl/.project
 /arm_vhdl/.settings
+vivado.jou
+vivado.log
+vivado_pid4945.str

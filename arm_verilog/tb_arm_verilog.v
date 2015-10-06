@@ -10,12 +10,12 @@ module tb_shift_register();
 	
 initial begin
 	$display ("testing starts here");
-	Go = 0;
-	#5 clk_in = 1;
-	#15 reset_n = 0;
-	#10 D = 8'b11111111; A = 7'b1111111;
-	#10 Go = 1;
-	#10 Go = 0; D = 7'b00000000; A = 7'b0000000;
+	reset_n = 0; Go = 0; clk_in = 1; D = 7'b00000000; A = 7'b0000000;  //reset
+	
+	#10 reset_n = 1;	D = 8'b11111111; A = 7'b1111111;	Go = 1;
+	#10  				D = 7'b00000000; A = 7'b0000000;	Go = 0;
+	
+	
 	#100 $finish;
 end 
 
