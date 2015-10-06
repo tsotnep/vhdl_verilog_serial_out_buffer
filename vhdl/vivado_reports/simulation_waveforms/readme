@@ -2,6 +2,7 @@ author: Tsotne Putkaradze
 
 i did the simulation and i took screenshots of waveforms.
 so, on the waveforms, that I provided in this folder:
+
 RED color waves(OutD & OutC) are output of entity "arm_vhdl" - that fulfills requested task
 WHITE color waves(A & D) are INPUTS A and D of the entity. (also, reset_n & Go are inputs as well)
 YELLOW color waves(receivedA & receivedD) are data-vectors, that were reconstructed from OutD & OutC, in testbench entity, they should be equal to white inputs: receivedA = A; receivedD = D;

@@ -1,3 +1,33 @@
+//-------------- Copyright (c) Notice -----------------------------------------
+//
+// The VHDL/Verilog code, the logic and concepts described OUT this file constitute
+// the intellectual property of the authors listed below, who is/are affiliated
+// to TUT (Tallinn University of Technology), School of ICT, Tallinn.
+// Any unauthorised use, copy or distribution is strictly prohibited.
+// Any authorised use, copy or distribution should carry this copyright notice
+// unaltered.
+// Authors: Tsotne Putkaradze, MSc student, Tallinn University of Technology, Tallinn, Estonia.
+//			Balaji Venu, Sr. Engineer, ARM Research, Cambridge, UK.
+// Contact: tsotnep@gmail.com
+// Date: 6 October, 2015.
+//
+// Code Description:
+//		the purpose of this code below is to stimlate inputs for unit: arm_verilog, in the current versions two tests are given, 
+//		the reason we don't test this unit exhaustively is following:
+//		according to the logic, unit: arm_logic simply takes inputs, and outputs them unmodifyed, except, adding four bits of information:
+//		two 'Z' - bits meaning - high impedance, two '0' - starting and ending bits.
+//		in the module we are printing output on screen with command: "always #10 $display <values&comments>", this prints out values every 10ns, from 10th ns.
+//		for better observation on outputs (for signal: OutC), you can change the value of #10 into #5.
+// 
+// Tools used set 1 non-free:
+// Coding:		Sigasi linux 64bit - Floating Licence (TTU)
+// Synthesis: 	Vivado Synthesis - Vivado 2015.2 linux 64bit - Floating Licence (TUT)
+// Simulation: 	Vivado Simulator - Vivado 2015.2 linux 64bit - Floating Licence (TUT)
+//
+// Tools used set 2 open-source:
+// Simulation:	Icarus Verilog on linux http://iverilog.icarus.com/
+// Simulation:  Icarus Verilog online simulator - iverilog.com 
+
 `timescale 1ns/1ps
 module tb_arm_verilog();	
 	wire OutD;
@@ -9,27 +39,23 @@ module tb_arm_verilog();
 	reg reset_n;	
 	
 //clock driver
-	always
-		#5 clk_in = ~clk_in;
+	always	#5 clk_in = ~clk_in;
 //displaying output
-	always
-		#10 $display ("Time = %d, outputs:  OutC = %d OutD = %d",$time,OutC,OutD);
-		
+	always	#10 $display ("Time = %d, outputs:  OutC = %d OutD = %d",$time,OutC,OutD); //to observe OutC change #10 into #5
+	
 initial begin
-//$monitor ("Time = %d outputs:  OutC = %d OutD = %d",$time,OutC,OutD);
+
 
 //reset	
 	$display ("to make things simple: when OutC = 0 then output should be valid. it should start and end with 0, after A & D it should output 'Z' ");
 	reset_n = 0; Go = 0; clk_in = 1; D = 8'b00000000; A = 7'b0000000;  
 	#10 reset_n = 1;
-	
 
 //test pattern N1
 	#10 A = 7'b1111111;	D = 8'b11111111; 	Go = 1;
 	#10 A = 7'b0000000;	D = 8'b00000000; 	Go = 0;
 	$display ("Time: %d, outputs:  test pattern N1: A = 7'b1111111 D = 8'b11111111", $time);
 	#(20*10)
-	
 
 //test pattern N2
 	#10 A = 7'b1000001;	D = 8'b10011111; 	Go = 1;
