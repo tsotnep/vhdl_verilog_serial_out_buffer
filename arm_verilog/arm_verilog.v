@@ -1,11 +1,12 @@
 `timescale 1ns/1ps
 
-
-module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
+module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n); //when reset_n = 0 we reset everything. 
+	//parameters-generics
 	parameter sizeA = 7;
 	parameter sizeD = 8;
 	parameter constAllBitOnes = {18{1'b1}};
 
+	//I/O
 	output OutD;
 	output OutC;
 	input [sizeA-1:0] A;
@@ -14,6 +15,7 @@ module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
 	input clk_in;
 	input reset_n;	
 	
+	//I/O types
 	reg OutD;
 	reg OutC;
 	wire [sizeA-1:0] A;
@@ -26,6 +28,7 @@ module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
 	reg [18:0] Concatenated_Inputs;
 	reg enable_OutC;
 	
+	//initial values, resetted
 	initial begin
 		OutD <= 1'b1;
 		OutC <= 1'b1;
@@ -33,6 +36,7 @@ module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
 		Concatenated_Inputs <= {19{1'b1}};
 	end
 	
+	//assigning, shifting and outputting concatenated vector of inputs
 	always @ (posedge clk_in or posedge reset_n)
 	begin : main_function
 		if (reset_n == 1'b0) begin
@@ -46,6 +50,7 @@ module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
 		join
 	end
 	
+	//setting enable signal which controls when OutC will be active.
 	always @ (posedge clk_in or posedge reset_n)
 	begin : enabling_output_c
 		if (reset_n == 1'b0) begin
@@ -57,6 +62,7 @@ module arm_verilog (OutD, OutC, D, A, Go, clk_in, reset_n);
 		end
 	end
 	
+	//outputting OutC
 	always @(posedge clk_in or negedge clk_in or posedge reset_n)
 	begin : output_c
 		if (reset_n == 1'b0) begin
