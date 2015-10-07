@@ -88,7 +88,7 @@ module arm_verilog (
 	end
 	
 //assigning, shifting and outputting concatenated vector of inputs
-	always @ (posedge clk_in or posedge reset_n)
+	always @ (posedge clk_in or negedge reset_n)
 	begin : main_function
 		if (reset_n == 1'b0) begin
 			Concatenated_Inputs <= {19{1'b1}};
@@ -104,7 +104,7 @@ module arm_verilog (
 	end
 	
 //setting enable signal which controls when OutC will be active.
-	always @ (posedge clk_in or posedge reset_n)
+	always @ (posedge clk_in or negedge reset_n)
 	begin : enabling_output_c
 		if (reset_n == 1'b0) begin
 			enable_OutC <= 1'b0;

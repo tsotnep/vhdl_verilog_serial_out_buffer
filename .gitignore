@@ -2,6 +2,9 @@
 arm_verilog/
 arm_vhdl/
 verilog/.metadata/
+verilog/sources/vivado.jou
+verilog/sources/vivado.log
+verilog/sources/vivado_pid14695.str
 vhdl/.library_mapping.xml
 vhdl/.metadata.
 vhdl/.project

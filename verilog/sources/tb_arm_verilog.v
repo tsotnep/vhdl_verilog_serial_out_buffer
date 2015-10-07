@@ -29,7 +29,8 @@
 // Simulation:  Icarus Verilog online simulator - iverilog.com 
 
 `timescale 1ns/1ps
-module tb_arm_verilog();	
+module tb_arm_verilog();
+// I/O of arm_verilog
 	wire OutD;
 	wire OutC;
 	reg [6:0] A;
@@ -37,15 +38,48 @@ module tb_arm_verilog();
 	reg Go;
 	reg clk_in;
 	reg reset_n;	
+//signals for checking the correctness of module arm_verilog
+	reg [6:0] receivedA;
+	reg [7:0] receivedD;
+	reg zA;
+	reg zD;
+	reg [7:0] recTemp; //this should act as input buffer, so it should have the size of biggest input
 	
 //clock driver
 	always	#5 clk_in = ~clk_in;
+
 //displaying output
 	always	#10 $display ("Time = %d, outputs:  OutC = %d OutD = %d",$time,OutC,OutD); //to observe OutC change #10 into #5
-	
+
+//receive generated output from main unit: arm_verilog
+	always @(posedge OutC or posedge Go or negedge reset_n)
+	begin
+	    if (reset_n == 1'b0 || Go == 1'b1) begin
+	       zA <= 1'b0;
+	       zD <= 1'b0;
+           recTemp <= {8{1'b0}};
+           receivedA <= {7{1'b0}};
+           receivedD <= {8{1'b0}};
+		end else if (OutD !== 1'bZ && zD == 1'b0) begin
+			recTemp <= {recTemp[7-1:0], OutD};
+		end else begin
+			if (zA == 1'b0) begin
+				zA <= 1'b1;
+				receivedA <= recTemp[7:0];
+			end else if (zD == 1'b0) begin
+				zD <= 1'b1;
+				receivedD <= recTemp;
+				recTemp <= {8{1'b0}};
+			end
+		end
+	end 
 initial begin
-
-
+//reset tester signals
+	zA <= 1'b0;
+	zD <= 1'b0;
+	recTemp <= {8{1'b0}};
+	receivedA <= {7{1'b0}};
+	receivedD <= {8{1'b0}};
 //reset	
 	$display ("to make things simple: when OutC = 0 then output should be valid. it should start and end with 0, after A & D it should output 'Z' ");
 	reset_n = 0; Go = 0; clk_in = 1; D = 8'b00000000; A = 7'b0000000;  
