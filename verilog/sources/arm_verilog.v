@@ -21,16 +21,16 @@
 //		if data is not being sent program is 'idle', clock output "OutC" and data output "OutD" are set to constant '1'
 //		
 // Code Details:
-//		after finishing sending each input, code sends out 'Z' high impedance signal, notifying that one input is sent.  
+//		after finishing sending each input, code sends out 'Z'(signal name: "zPause") high impedance signal, notifying that one input is sent.  
 //		BEFORE sending first input AND AFTER sending second input (with it's "Z" signal), 
-//		output "OutD" gets the value of '0', like that: '0'+A+'Z'+D+'Z'+'0' 
+//		output "OutD" gets the value of '0' (signal name: "header")
+//		everything is parameterizable: "header", "zPause", input size.
 //
 // Solution Details:
 //		to satisfy the requirements of the task, two solutions are used. 
-//		solution A: by using shift registers 	to select THE BIT by constructing the send-vector, shifting it, and pointing always to LM/RM bit.
+//		solution A: by using shift registers 	to select THE BIT by constructing the concatenated-vector, shifting it, and pointing always to LM/RM bit.
 //		solution B: by using counter, 			to select THE BIT by pointing to it with counter value
-//		in VHDL, 		I used solution A.
-//		in Verilog, 	I did both solutions separately A and B
+//		I used solution A.
 // 
 // Tools used set 1 non-free:
 // Coding:		Sigasi linux 64bit - Floating Licence (TTU)
@@ -55,8 +55,12 @@ module arm_verilog (
 //parameters-generics
 	parameter sizeA = 7;
 	parameter sizeD = 8;
-	parameter constAllBitOnes = {19{1'b1}};
-
+	parameter sizeZpause = 1;
+    parameter sizeHeader = 1;
+    parameter sizeConcatenatedInputs = sizeHeader + sizeA + sizeZpause + sizeD + sizeZpause + sizeHeader;
+	parameter [sizeHeader-1:0] header ={sizeHeader{1'b0}};
+    parameter [sizeZpause-1:0] zPause ={sizeZpause{1'bZ}};
+    parameter constAllBitOnes = {sizeConcatenatedInputs{1'b1}};
 //I/O
 	output OutD;
 	output OutC;
@@ -76,7 +80,7 @@ module arm_verilog (
 	wire reset_n;
 	
 //internal signals
-	reg [18:0] Concatenated_Inputs; //when Go signal arrives, this vector gets-saves '0'+A+'Z'+D+'Z'+'0' 
+	reg [sizeConcatenatedInputs-1:0] concatenatedInputs; //when Go signal arrives, this vector gets-saves '0'+A+'Z'+D+'Z'+'0' 
 	reg enable_OutC; //this is used to control OutC output
 	
 //initial values, resetted
@@ -84,22 +88,22 @@ module arm_verilog (
 		OutD <= 1'b1;
 		OutC <= 1'b1;
 		enable_OutC <= 1'b0;
-		Concatenated_Inputs <= {19{1'b1}};
+		concatenatedInputs <= {sizeConcatenatedInputs{1'b1}};
 	end
 	
 //assigning, shifting and outputting concatenated vector of inputs
 	always @ (posedge clk_in or negedge reset_n)
 	begin : main_function
 		if (reset_n == 1'b0) begin
-			Concatenated_Inputs <= {19{1'b1}};
+			concatenatedInputs <= {sizeConcatenatedInputs{1'b1}};
 			OutD <= 1'b1;
 		end 
 		else if (Go == 1'b1) begin
-			Concatenated_Inputs <= {1'b0, A, 1'bZ, D, 1'bZ, 1'b0};
+			concatenatedInputs <= {header, A, zPause, D, zPause, header};
 		end 
 		else begin
-			Concatenated_Inputs <= {Concatenated_Inputs[17:0], 1'b1};
-			OutD <= Concatenated_Inputs[18];			
+			concatenatedInputs <= {concatenatedInputs[sizeConcatenatedInputs-2:0], 1'b1};
+			OutD <= concatenatedInputs[18];			
 		end
 	end
 	
@@ -108,7 +112,7 @@ module arm_verilog (
 	begin : enabling_output_c
 		if (reset_n == 1'b0) begin
 			enable_OutC <= 1'b0;
-		end else if (Concatenated_Inputs == constAllBitOnes) begin //on this pattern, we should reset OutC to zero. its "ending pattern"
+		end else if (concatenatedInputs == constAllBitOnes) begin //on this pattern, we should reset OutC to zero. its "ending pattern"
 			enable_OutC <= 1'b0;
 		end else begin
 			enable_OutC <= 1'b1;

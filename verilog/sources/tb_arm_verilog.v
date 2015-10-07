@@ -18,7 +18,9 @@
 //		two 'Z' - bits meaning - high impedance, two '0' - starting and ending bits.
 //		in the module we are printing output on screen with command: "always #10 $display <values&comments>", this prints out values every 10ns, from 10th ns.
 //		for better observation on outputs (for signal: OutC), you can change the value of #10 into #5.
-// 
+// 		I also implemented Receiver, that gathers outputted data and reconstructs the original vector, after that we do 'assert-like' checking
+//		If Received data matches inputted data, we print that everything is OK
+//
 // Tools used set 1 non-free:
 // Coding:		Sigasi linux 64bit - Floating Licence (TTU)
 // Synthesis: 	Vivado Synthesis - Vivado 2015.2 linux 64bit - Floating Licence (TUT)
