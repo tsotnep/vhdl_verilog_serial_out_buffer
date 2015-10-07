@@ -87,17 +87,18 @@ initial begin
 
 //test pattern N1
 	#10 A = 7'b1111111;	D = 8'b11111111; 	Go = 1;
-	#10 A = 7'b0000000;	D = 8'b00000000; 	Go = 0;
-	$display ("Time: %d, outputs:  test pattern N1: A = 7'b1111111 D = 8'b11111111", $time);
-	#(20*10)
-
+	#10 	Go = 0;
+	$display ("Time: %d, outputs:  START test pattern N1: A = 7'b1111111 D = 8'b11111111", $time);
+	#(25*10) //simply wait long enough
+	#1 if ((receivedA == A) || (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 1");
+    #10
+    
 //test pattern N2
 	#10 A = 7'b1000001;	D = 8'b10011111; 	Go = 1;
-	#10 A = 7'b0000000;	D = 8'b00000000; 	Go = 0;
-	$display ("Time: %d, outputs:  test pattern N2: A = 7'b1000001 D = 8'b10011111", $time);
-	#(20*10)
-	
-	$display ("Time: %d, outputs:  end of test patterns: A = 7''b0000000 D = 8''b00000000", $time);		
+	#10 	Go = 0;
+	$display ("Time: %d, outputs:  START test pattern N2: A = 7'b1000001 D = 8'b10011111", $time);
+	#(25*10) //simply wait long enough
+	#1 if ((receivedA == A) || (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 2");
 	#100 $finish;
 end 
 
