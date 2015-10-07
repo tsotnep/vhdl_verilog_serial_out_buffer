@@ -30,8 +30,7 @@
 --		to satisfy the requirements of the task, two solutions are used. 
 --		solution A: by using shift registers 	to select THE BIT by constructing the send-vector, shifting it, and pointing always to LM/RM bit.
 --		solution B: by using counter, 			to select THE BIT by pointing to it with counter value
---		in VHDL, 		I used solution A.
---		in Verilog, 	I did both solutions separately A and B
+--		I used solution A.
 -- 
 -- Tools used:
 -- Coding:		Sigasi linux 64bit - Floating Licence (TTU)
