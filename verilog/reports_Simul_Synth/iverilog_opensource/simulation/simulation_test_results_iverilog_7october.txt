@@ -2,35 +2,41 @@ to make things simple: when OutC = 0 then output should be valid. it should star
 Time =                   10, outputs:  OutC = 1 OutD = 1
 Time =                   20, outputs:  OutC = 1 OutD = 1
 Time =                   30, outputs:  OutC = 1 OutD = 1
-Time:                   30, outputs:  test pattern N1: A = 7'b1111111 D = 8'b11111111
+Time:                   30, outputs:  START test pattern N1: A = 7'b1000001 D = 8'b10000001
 Time =                   40, outputs:  OutC = 0 OutD = 0
 Time =                   50, outputs:  OutC = 0 OutD = 1
-Time =                   60, outputs:  OutC = 0 OutD = 1
-Time =                   70, outputs:  OutC = 0 OutD = 1
-Time =                   80, outputs:  OutC = 0 OutD = 1
-Time =                   90, outputs:  OutC = 0 OutD = 1
-Time =                  100, outputs:  OutC = 0 OutD = 1
+Time =                   60, outputs:  OutC = 0 OutD = 0
+Time =                   70, outputs:  OutC = 0 OutD = 0
+Time =                   80, outputs:  OutC = 0 OutD = 0
+Time =                   90, outputs:  OutC = 0 OutD = 0
+Time =                  100, outputs:  OutC = 0 OutD = 0
 Time =                  110, outputs:  OutC = 0 OutD = 1
 Time =                  120, outputs:  OutC = 0 OutD = z
 Time =                  130, outputs:  OutC = 0 OutD = 1
-Time =                  140, outputs:  OutC = 0 OutD = 1
-Time =                  150, outputs:  OutC = 0 OutD = 1
-Time =                  160, outputs:  OutC = 0 OutD = 1
-Time =                  170, outputs:  OutC = 0 OutD = 1
-Time =                  180, outputs:  OutC = 0 OutD = 1
-Time =                  190, outputs:  OutC = 0 OutD = 1
+Time =                  140, outputs:  OutC = 0 OutD = 0
+Time =                  150, outputs:  OutC = 0 OutD = 0
+Time =                  160, outputs:  OutC = 0 OutD = 0
+Time =                  170, outputs:  OutC = 0 OutD = 0
+Time =                  180, outputs:  OutC = 0 OutD = 0
+Time =                  190, outputs:  OutC = 0 OutD = 0
 Time =                  200, outputs:  OutC = 0 OutD = 1
 Time =                  210, outputs:  OutC = 0 OutD = z
 Time =                  220, outputs:  OutC = 0 OutD = 0
-Time:                  230, outputs:  end of test patterns: A = 7''b0000000 D = 8''b00000000
 Time =                  230, outputs:  OutC = 1 OutD = 1
 Time =                  240, outputs:  OutC = 1 OutD = 1
 Time =                  250, outputs:  OutC = 1 OutD = 1
 Time =                  260, outputs:  OutC = 1 OutD = 1
 Time =                  270, outputs:  OutC = 1 OutD = 1
+OUTPUT DO MATCH WITH INPUT (A = 7'b1000001; D = 8'b10000001)
 Time =                  280, outputs:  OutC = 1 OutD = 1
 Time =                  290, outputs:  OutC = 1 OutD = 1
 Time =                  300, outputs:  OutC = 1 OutD = 1
 Time =                  310, outputs:  OutC = 1 OutD = 1
 Time =                  320, outputs:  OutC = 1 OutD = 1
 Time =                  330, outputs:  OutC = 1 OutD = 1
+Time =                  340, outputs:  OutC = 1 OutD = 1
+Time =                  350, outputs:  OutC = 1 OutD = 1
+Time =                  360, outputs:  OutC = 1 OutD = 1
+Time =                  370, outputs:  OutC = 1 OutD = 1
+Time =                  380, outputs:  OutC = 1 OutD = 1
+Time =                  390, outputs:  OutC = 1 OutD = 1

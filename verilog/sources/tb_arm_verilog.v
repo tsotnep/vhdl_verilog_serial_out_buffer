@@ -85,21 +85,31 @@ initial begin
 	reset_n = 0; Go = 0; clk_in = 1; D = 8'b00000000; A = 7'b0000000;  
 	#10 reset_n = 1;
 
-//test pattern N1
-	#10 A = 7'b1111111;	D = 8'b11111111; 	Go = 1;
-	#10 	Go = 0;
-	$display ("Time: %d, outputs:  START test pattern N1: A = 7'b1111111 D = 8'b11111111", $time);
-	#(25*10) //simply wait long enough
-	#1 if ((receivedA == A) || (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 1");
-    #10
+////test pattern N1
+//	#10 A = 7'b1111111;	D = 8'b11111111; 	Go = 1;
+//	#10 	Go = 0;
+//	$display ("Time: %d, outputs:  START test pattern N1: A = 7'b1111111 D = 8'b11111111", $time);
+//	#(25*10) //simply wait long enough
+//	#1 if ((receivedA == A) && (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 1");
+//    #10
     
-//test pattern N2
-	#10 A = 7'b1000001;	D = 8'b10011111; 	Go = 1;
-	#10 	Go = 0;
-	$display ("Time: %d, outputs:  START test pattern N2: A = 7'b1000001 D = 8'b10011111", $time);
-	#(25*10) //simply wait long enough
-	#1 if ((receivedA == A) || (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 2");
-	#100 $finish;
+////test pattern N2
+//	#10 A = 7'b1000001;	D = 8'b10011111; 	Go = 1;
+//	#10 	Go = 0;
+//	$display ("Time: %d, outputs:  START test pattern N2: A = 7'b1000001 D = 8'b10011111", $time);
+//	#(25*10) //simply wait long enough
+//	#1 if ((receivedA == A) && (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT, Test 2");
+//	#100 $finish;
+	
+	
+//test pattern N1
+        #10 A = 7'b1000001;    D = 8'b10000001;     Go = 1;
+        #10     Go = 0;
+	$display ("Time: %d, outputs:  START test pattern N1: A = 7'b1000001 D = 8'b10000001", $time);
+        #(25*10) //simply wait long enough
+	if ((receivedA == A) && (receivedD ==D)) $display ("OUTPUT DO MATCH WITH INPUT (A = 7'b1000001; D = 8'b10000001)");
+        #10
+        #100 $finish;
 end 
 
 

@@ -79,14 +79,17 @@ begin
 
 	stimul_p : process
 	begin
-		reset_n <= '0';	wait for t;	reset_n <= '1'; wait for 35 ns; --reset and wait for a while
+		reset_n <= '0';	
+		A  <= "0000000"; D  <= "00000000";  Go <= '0';  wait for t;	reset_n <= '1';  wait for 35 ns; --reset and wait for a while
 	
-		A  <= "1111111"; D  <= "11111111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 1
+--		A  <= "1111111"; D  <= "11111111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 1
 		
-		A  <= "1110111"; D  <= "11100111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 2
+--		A  <= "1110111"; D  <= "11100111"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 2
 		
-		A  <= "0110100"; D  <= "10111001"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 3
-				
+--		A  <= "0110100"; D  <= "10111001"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 3
+	
+		A  <= "1000001"; D  <= "10000001"; 	Go <= '1'; 	wait for t;  Go <= '0'; wait for t*(sizeA + sizeD + sizeHeader + sizeZPause + 5); --test 3
+    				
 		wait;
 	end process stimul_p;
 
