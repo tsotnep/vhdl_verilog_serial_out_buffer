@@ -81,6 +81,8 @@ begin
 			becomeIdle         <= '1';
 			concatenatedInputs <= (others => '1'); --we reset it on '1' because when sending is ended, output is '1'
 		elsif Go = '1' then
+			OutD               <= '1';
+			becomeIdle         <= '1';
 			concatenatedInputs <= header & A & zPause & D & zPause & header; --this line concatenates inputs, pauses, and headers
 		elsif rising_edge(clk_in) then
 			OutD <= concatenatedInputs(outputSize - 1); --this output, that gets Left Most bit of the concatenated vector. that was required.
