@@ -35,8 +35,8 @@ Write a piece of Synthesizable Verilog design to generate the following outputs 
 
 According to fig: \ref{fig:task_arm} (if circuit is designed on rising edge)
 \begin{enumerate}
-\item First value receiver "clocks" is Highest(Left Most) Bit of A input
-\item Last Value receiver "clocks" is '0' 
+\item First value receiver of this data "clocks"(with OutC) is Highest(Left Most) Bit of A input
+\item Last Value receiver of this data "clocks"(with OutC) is '0' 
 \end{enumerate}
 
 \newpage
@@ -64,9 +64,9 @@ With this solution I don't have to use any adder, fsm or any other relatively co
 
 
 \subsection{Solution B : Solution With 3bit Counter and FSM}
-This solution is following, after Go signal arrives, we store the data in registers. We construct one - 3 bit adder. we use this adder to address the correct bit of stored inputs, like this: \newline
-$ OutD <= stored_Input_A [counterValue]; $
-and FSM controls which vector will be sent to output, $stored_Input_A$ or $stored_Input_D$
+This solution is following, after Go signal arrives, we store the data in registers. We construct one - 3 bit adder. we use this adder to address the appropriate bit of stored inputs, like this: \newline
+$ OutD <= stored\_Input\_A [counterValue]; $
+and FSM controls which vector will be sent to output, $stored\_Input\_A$ or $stored\_Input\_D$
 
 
 \section{Decision}
@@ -83,9 +83,10 @@ In attached files, there is also folder called "Additional" there, I've construc
 For validating the correctness of logic, in both languges I generated test-benches, that take both output OutD and OutC, and reconstruct the provided data, in other words, we use OutC as a clock to sample/receive OutD. and I used Assert statements to compare the provided and reconstructed data.
 
 \section{Simulation}
-On the figures below, you can see the simulations when following inputs are given:
+On the figures below, fig: \ref{fig:tb_verilog}, \ref{fig:tb_vhdl}, \ref{fig:tb_iverilogcom}, \ref{fig:tb_iverloglinux}, you can see the simulations when following inputs are given:
 $A = 1000001, D = 10000001$
-Codes are also synthesizable, you can view the synthesis reports in corresponding folders
+Codes are also synthesizable, you can view the synthesis reports in corresponding folders.
+We used only this one pattern, because in this particular case, its enough to observe only first and last bits of inputs - if they are lost or not. This is enough because the module we wrote do not modify the data, it is storing and outputting it only, so - if first and last bits are correct, then data inside is unaffected. I could have written a function that generates test patterns but It is completely out of necessity.
 
 \begin{figure}[H]
 \centering
@@ -111,7 +112,7 @@ Codes are also synthesizable, you can view the synthesis reports in correspondin
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth] {tb_iveriloglinux.png}
-\caption{waveform of outputs generated from above mentioned inputs, logic is written in Verilog Language, simulation tool: Icarus Verilog - www.iverilog.icarus.com}
+\caption{waveform of outputs generated from above mentioned inputs, logic is written in Verilog Language, simulation tool: Icarus Verilog - http://iverilog.icarus.com}
 \label{fig:tb_iverloglinux}
 \end{figure}
 

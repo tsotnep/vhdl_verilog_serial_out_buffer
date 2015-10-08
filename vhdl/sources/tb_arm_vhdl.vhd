@@ -13,11 +13,10 @@
 --
 -- Code Description:
 --		This code generates inputs for the entoty "arm_vhdl" which is has "parallel in serial out" behaviour
---		stimulation consists of two process: "clock_driver_p" for sending the clock, and "stimul_p" for generating inputs
---		This code also implements a checker, that verifies that the solution is correct, this consists of two parts:
---		first part is process "receiver_p", It acts as a serial receiver, and reconstructs the data from OutD.
---		second part is process called "asserting_p" which, via assert statement validates that 
---		INPUT Given to the program and bit-vector, reconstructed from output "OutD" of the program, are identical. 
+--		stimulation consists of four process: "clock_driver_p" for sending the clock, and "stimul_p" for generating inputs
+--		for verification purposes I'm using process "receiver_p" - It acts as a serial receiver, and reconstructs the data-vector from OutD.
+--		and the last: process "asserting_p" which, via assert statement notifies us if:
+--		INPUT Given to the program, and bit-vector - reconstructed from output "OutD" of the program, are identical or not
 --		
 -- 
 -- Tools used:
@@ -57,6 +56,7 @@ architecture RTL of tb_arm_vhdl is
 	signal zA : STD_LOGIC := '0'; --zA is set to '1' when first 'z' signal is received, and that happens, when sendin "A" is done
 	signal zD : STD_LOGIC := '0'; --zD is set to '1' when second 'z' signal is received, which means sending "D" is done.
 begin
+--Instantiation of the Unit under test
 	arm_vhdl_inst : entity work.arm_vhdl
 		port map(
 			OutD    => OutD,
@@ -68,6 +68,7 @@ begin
 			reset_n => reset_n
 		);
 
+--clock generator for UUT
 	clock_driver_p : process
 		constant period : time := 10 ns;
 	begin
@@ -77,6 +78,7 @@ begin
 		wait for period / 2;
 	end process clock_driver_p;
 
+--generating inputs for UUT
 	stimul_p : process
 	begin
 		reset_n <= '0';	
@@ -93,6 +95,7 @@ begin
 		wait;
 	end process stimul_p;
 
+--receiving outputs of UUT
 	receiver_p : process (OutC, reset_n, Go)
 	begin
 		if reset_n = '0' or Go = '1' then
@@ -117,6 +120,7 @@ begin
 		end if;
 	end process receiver_p;
 
+--checking if outputs of UUT are matched with inputs that was given to it
 	asserting_p : process (A, D, receivedA, receivedD, zD, Go)
 	begin
 		if zD = '1' and Go = '0' then

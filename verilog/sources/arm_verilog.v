@@ -19,25 +19,25 @@
 //		during transmission of data, code sends out clock as well. 
 //		so, receiver can use this clock to read the sent data, even though if receiver is on different clock domain.
 //		if data is not being sent program is 'idle', clock output "OutC" and data output "OutD" are set to constant '1'
-//		
+//
 // Code Details:
-//		after finishing sending each input, code sends out 'Z'(signal name: "zPause") high impedance signal, notifying that one input is sent.  
-//		BEFORE sending first input AND AFTER sending second input (with it's "Z" signal), 
-//		output "OutD" gets the value of '0' (signal name: "header")
-//		everything is parameterizable: "header", "zPause", input size.
+//		after finishing sending each input, code sends out 'Z'(signal name: "zPause") high impedance signal, notifying the receiver that one data-vector is sent.  
+//		BEFORE sending first input AND AFTER sending second input (with it's "Z" signal, i called this "zPause"), 
+//		output "OutD" gets the value of '0' (I called this signal: "header")
+//		every size is parameterizable: "header", "zPause", input-vectors. 
 //
 // Solution Details:
-//		to satisfy the requirements of the task, two solutions are used. 
+//		to satisfy the requirements of the task, there are two possible solutions.
 //		solution A: by using shift registers 	to select THE BIT by constructing the concatenated-vector, shifting it, and pointing always to LM/RM bit.
 //		solution B: by using counter, 			to select THE BIT by pointing to it with counter value
 //		I used solution A.
 // 
-// Tools used set 1 non-free:
+// Tools used, set 1 non-free:
 // Coding:		Sigasi linux 64bit - Floating Licence (TTU)
 // Synthesis: 	Vivado Synthesis - Vivado 2015.2 linux 64bit - Floating Licence (TUT)
 // Simulation: 	Vivado Simulator - Vivado 2015.2 linux 64bit - Floating Licence (TUT)
 //
-// Tools used set 2 open-source:
+// Tools used, set 2 open-source:
 // Simulation:	Icarus Verilog on linux http://iverilog.icarus.com/
 // Simulation:  Icarus Verilog online simulator - iverilog.com 
 
@@ -52,16 +52,16 @@ module arm_verilog (
 	clk_in, 	//clock input
 	reset_n		//when reset_n = 0 we reset everything. 
 ); 
-//parameters-generics
+//Declaration parameters-generics
 	parameter sizeA = 7;
 	parameter sizeD = 8;
 	parameter sizeZpause = 1;
-    parameter sizeHeader = 1;
-    parameter sizeConcatenatedInputs = sizeHeader + sizeA + sizeZpause + sizeD + sizeZpause + sizeHeader;
+	parameter sizeHeader = 1;
+	parameter sizeConcatenatedInputs = sizeHeader + sizeA + sizeZpause + sizeD + sizeZpause + sizeHeader;
 	parameter [sizeHeader-1:0] header ={sizeHeader{1'b0}};
-    parameter [sizeZpause-1:0] zPause ={sizeZpause{1'bZ}};
-    parameter constAllBitOnes = {sizeConcatenatedInputs{1'b1}};
-//I/O
+	parameter [sizeZpause-1:0] zPause ={sizeZpause{1'bZ}};
+	parameter constAllBitOnes = {sizeConcatenatedInputs{1'b1}};
+//Declaration I/O
 	output OutD;
 	output OutC;
 	input [sizeA-1:0] A;
@@ -70,7 +70,7 @@ module arm_verilog (
 	input clk_in;
 	input reset_n;	
 	
-//I/O types
+//Declaration I/O types
 	reg OutD;
 	reg OutC;
 	wire [sizeA-1:0] A;
@@ -79,7 +79,7 @@ module arm_verilog (
 	wire clk_in;
 	wire reset_n;
 	
-//internal signals
+//Declaration internal signals 
 	reg [sizeConcatenatedInputs-1:0] concatenatedInputs; //when Go signal arrives, this vector gets-saves '0'+A+'Z'+D+'Z'+'0' 
 	reg enable_OutC; //this is used to control OutC output
 	
@@ -92,6 +92,8 @@ module arm_verilog (
 	end
 	
 //assigning, shifting and outputting concatenated vector of inputs
+//if reset is not 0 and Go is 1, we save inputs into concatenatedInputs, 
+//if reset is not 0 and Go is 0, we output Left Most bit of concatenatedInputs
 	always @ (posedge clk_in or negedge reset_n)
 	begin : main_function
 		if (reset_n == 1'b0) begin
@@ -100,6 +102,7 @@ module arm_verilog (
 		end 
 		else if (Go == 1'b1) begin
 			concatenatedInputs <= {header, A, zPause, D, zPause, header};
+			OutD <= 1'b1;
 		end 
 		else begin
 			concatenatedInputs <= {concatenatedInputs[sizeConcatenatedInputs-2:0], 1'b1};
@@ -107,7 +110,8 @@ module arm_verilog (
 		end
 	end
 	
-//setting enable signal which controls when OutC will be active.
+//setting enable signal which controls when OutC will be active
+//enable_OutC is 1 when reset is not 0 and when concatenatedInputs do not consist of 1s only
 	always @ (posedge clk_in or negedge reset_n)
 	begin : enabling_output_c
 		if (reset_n == 1'b0) begin
@@ -119,7 +123,7 @@ module arm_verilog (
 		end
 	end
 	
-//outputting OutC
+//outputting OutC, OutC is 1 when reset is not 0 and when enable_OutC is 1.
 	always @(clk_in or reset_n or enable_OutC)
 	begin : output_c
 		if (reset_n == 1'b0) begin

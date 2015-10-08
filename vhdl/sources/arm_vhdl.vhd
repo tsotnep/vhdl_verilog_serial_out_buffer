@@ -22,12 +22,12 @@
 --		
 -- Code Details:
 --		after finishing sending each input, code sends out 'Z'(signal name: "zPause") high impedance signal, notifying that one input is sent.  
---		BEFORE sending first input AND AFTER sending second input (with it's "Z" signal), 
---		output "OutD" gets the value of '0' (signal name: "header")
---		everything is parameterizable: "header", "zPause", input size.
+--		BEFORE sending first input AND AFTER sending second input (with it's "Z" signal, i called this "zPause"),
+--		output "OutD" gets the value of '0' (I called this signal: "header")
+--		every size is parameterizable: "header", "zPause", input-vectors. 
 --
 -- Solution Details:
---		to satisfy the requirements of the task, two solutions are used. 
+--		to satisfy the requirements of the task, there are two possible solutions.
 --		solution A: by using shift registers 	to select THE BIT by constructing the send-vector, shifting it, and pointing always to LM/RM bit.
 --		solution B: by using counter, 			to select THE BIT by pointing to it with counter value
 --		I used solution A.
@@ -69,12 +69,11 @@ architecture RTL of arm_vhdl is
 	signal concatenatedInputs : STD_LOGIC_VECTOR(outputSize - 1 downto 0) := (others => '1');
 	signal becomeIdle         : STD_LOGIC                                 := '0';
 begin
+	OutC <= '1' when becomeIdle = '1'		--when sending is finished, we use that additional signal because we registered it and it gives us 1 clock cycle delay, so that clocking will not start earlier than data.
+		else '1' when reset_n = '0'			--when reset is '0'
+		else clk_in;						--send out clk_in in rest of the cases : when data is being sent.
 
-	OutC <= '1' when becomeIdle = '1'	--when sending is finished, we use that additional signal because we registered it and it gives us 1 clock cycle delay, so that clocking will not start earlier than data.
-		else '1' when reset_n = '0'		--when reset is '0'
-		else clk_in;					--send out clk_in in rest of the cases : when data is being sent. 
-
-	serial_out_p: process(clk_in, reset_n, A, D, Go) is
+	serial_out_p : process(clk_in, reset_n, A, D, Go) is
 	begin
 		if reset_n = '0' then
 			OutD               <= '1';
@@ -85,15 +84,16 @@ begin
 			becomeIdle         <= '1';
 			concatenatedInputs <= header & A & zPause & D & zPause & header; --this line concatenates inputs, pauses, and headers
 		elsif rising_edge(clk_in) then
-			OutD <= concatenatedInputs(outputSize - 1); --this output, that gets Left Most bit of the concatenated vector. that was required.
-			concatenatedInputs <= concatenatedInputs(outputSize - 2 downto 0) & '1'; --this line shifts the concatenated vector to the left, so that current LM bit that was outputed on this clock cycle, will be lost and next bit will become LM
-			
+			OutD               <= concatenatedInputs(outputSize - 1); 					--this output, that gets Left Most bit of the concatenated vector. that was required.
+			concatenatedInputs <= concatenatedInputs(outputSize - 2 downto 0) & '1'; 	--this line shifts the concatenated vector to the left, so that current LM bit that was outputed on this clock cycle, will be lost and next bit will become LM
+
 			if concatenatedInputs = sendingEnded then
 				becomeIdle <= '1';      --this signal is '1' when sending finished or has not started, we use it for controlling "OutC" 
 			else
 				becomeIdle <= '0';
 			end if;
+
 		end if;
 	end process serial_out_p;
-	
+
 end architecture RTL;
